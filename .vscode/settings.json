@@ -14,5 +14,6 @@
     "--background-index",
     "--query-driver=**",
     "--compile-commands-dir=e:\\nck Item\\zone 41\\Proj-11-geek\\eso32-c6-pic2\\sample_project\\build"
-  ]
+  ],
+  "idf.flashType": "UART"
 }
