@@ -8,3 +8,4 @@ void display_set_backlight(uint8_t percent);
 void display_fill(uint16_t color);
 void display_color_cycle(void);
 void display_test_pattern(void);
+void display_show_photo(void);

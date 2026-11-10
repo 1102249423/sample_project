@@ -13,10 +13,9 @@ void app_main(void)
     ESP_ERROR_CHECK(display_init());
 
     display_set_backlight(80);
-    display_color_cycle();
-    display_test_pattern();
+    display_show_photo();
 
-    ESP_LOGI(TAG, "ST7789 bring-up complete");
+    ESP_LOGI(TAG, "Photo displayed");
 
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));

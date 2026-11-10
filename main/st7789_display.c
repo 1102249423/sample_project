@@ -2,6 +2,7 @@
 #include "board_pins.h"
 
 #include <stddef.h>
+#include <string.h>
 
 #include "driver/ledc.h"
 #include "driver/spi_master.h"
@@ -201,6 +202,27 @@ void display_test_pattern(void)
         }
     }
 
+    ESP_ERROR_CHECK(esp_lcd_panel_draw_bitmap(s_panel, 0, 0, LCD_H_RES, LCD_V_RES,
+                                              s_framebuffer));
+}
+
+extern const uint8_t photo_rgb565_start[] asm("_binary_photo_rgb565_start");
+extern const uint8_t photo_rgb565_end[] asm("_binary_photo_rgb565_end");
+
+void display_show_photo(void)
+{
+    if (s_panel == NULL || s_framebuffer == NULL) {
+        return;
+    }
+
+    size_t expected = LCD_H_RES * LCD_V_RES * sizeof(uint16_t);
+    size_t len = (size_t)(photo_rgb565_end - photo_rgb565_start);
+    if (len != expected) {
+        ESP_LOGE(TAG, "photo size %u, expected %u", (unsigned)len, (unsigned)expected);
+        return;
+    }
+
+    memcpy(s_framebuffer, photo_rgb565_start, expected);
     ESP_ERROR_CHECK(esp_lcd_panel_draw_bitmap(s_panel, 0, 0, LCD_H_RES, LCD_V_RES,
                                               s_framebuffer));
 }
